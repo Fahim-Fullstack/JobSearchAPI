@@ -67,8 +67,13 @@ const submitHandler = (event) => {
     })
     .then((data) => {
       //extract job items
-      const { jobItems } = data; // both are same (data.jobItems)
-      console.log(data);
+      const { jobItems: jobData } = data; // both are same (data.jobItems) also renames as --> jobData
+
+      // remove spinner
+      spinnerSearchEl.classList.remove("spinner--visible");
+
+      // render number of results
+      numberEl.textContent = jobData.length;
     })
     .catch((error) => console.log(error));
 };
