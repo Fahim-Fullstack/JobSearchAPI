@@ -65,7 +65,11 @@ const submitHandler = (event) => {
 
       return res.json();
     })
-    .then((data) => console.log(data.jobItems))
+    .then((data) => {
+      //extract job items
+      const { jobItems } = data; // both are same (data.jobItems)
+      console.log(data);
+    })
     .catch((error) => console.log(error));
 };
 
