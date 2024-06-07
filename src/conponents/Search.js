@@ -3,9 +3,11 @@ import {
   searchInputEl,
   jobListSearchEl,
   numberEl,
+  BASE_API_URL,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
+import renderJobList from "./JobList.js";
 
 // -- Search component
 const submitHandler = (event) => {
@@ -54,28 +56,7 @@ const submitHandler = (event) => {
       numberEl.textContent = jobData.length;
 
       // Render job items in search job list
-      jobData.slice(0, 7).forEach((jobData) => {
-        const newJobItemHTML = `
-            <li class="job-item">
-              <a class="job-item__link" href="${jobData.id}">
-                  <div class="job-item__badge">${jobData.badgeLetters}</div>
-                  <div class="job-item__middle">
-                      <h3 class="third-heading">${jobData.title}</h3>
-                      <p class="job-item__company">${jobData.company}</p>
-                      <div class="job-item__extras">
-                          <p class="job-item__extra"><i class="fa-solid fa-clock job-item__extra-icon"></i> ${jobData.duration}</p>
-                          <p class="job-item__extra"><i class="fa-solid fa-money-bill job-item__extra-icon"></i> ${jobData.salary}</p>
-                          <p class="job-item__extra"><i class="fa-solid fa-location-dot job-item__extra-icon"></i> ${jobData.location}</p>
-                      </div>
-                  </div>
-                  <div class="job-item__right">
-                      <i class="fa-solid fa-bookmark job-item__bookmark-icon"></i>
-                      <time class="job-item__time">${jobData.daysAgo}d</time>
-                  </div>
-              </a>
-          </li>`;
-        jobListSearchEl.insertAdjacentHTML("beforeend", newJobItemHTML);
-      });
+      renderJobList(jobData);
     })
     .catch((error) => console.log(error));
 };
