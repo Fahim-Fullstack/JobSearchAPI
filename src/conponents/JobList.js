@@ -93,7 +93,7 @@ const clickHandler = (event) => {
       renderJobDetals(jobItem);
     })
     .catch((error) => {
-      renderSpinner();
+      renderSpinner("job-details");
       renderError(error.message);
     });
 };

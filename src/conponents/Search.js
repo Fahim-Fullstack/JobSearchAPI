@@ -58,6 +58,7 @@ const submitHandler = (event) => {
       renderJobList(jobData);
     })
     .catch((error) => {
+      renderSpinner("search");
       renderError(error.message);
     });
 };
