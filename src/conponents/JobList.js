@@ -3,6 +3,7 @@ import {
   jobDetailsContentEl,
   BASE_API_URL,
 } from "../common.js";
+import renderError from "./Error.js";
 import renderJobDetals from "./JobDetails.js";
 import renderSpinner from "./Spinner.js";
 
@@ -74,8 +75,7 @@ const clickHandler = (event) => {
   fetch(`${BASE_API_URL}/jobs/${id}`)
     .then((res) => {
       if (!res.ok) {
-        console.log("Something went wrong!");
-        return; // we don't want to do anything
+        throw new Error(`Resource issue(e.g. resource doesn't exist)`);
       }
 
       return res.json();
@@ -92,7 +92,10 @@ const clickHandler = (event) => {
       // render job details
       renderJobDetals(jobItem);
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      renderSpinner();
+      renderError(error.message);
+    });
 };
 
 jobListSearchEl.addEventListener("click", clickHandler);
