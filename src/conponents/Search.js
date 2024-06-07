@@ -3,8 +3,9 @@ import {
   searchInputEl,
   jobListSearchEl,
   numberEl,
-  spinnerSearchEl,
 } from "../common.js";
+import renderError from "./Error.js";
+import renderSpinner from "./Spinner.js";
 
 // -- Search component
 const submitHandler = (event) => {
@@ -18,14 +19,7 @@ const submitHandler = (event) => {
   const patternMatch = forbiddenPattern.test(searchText);
 
   if (patternMatch) {
-    errorTextEl.textContent = `Your search may not contain Numbers`;
-    errorEl.classList.add("error--visible");
-
-    //remove after 2 seconds
-    setTimeout(() => {
-      errorEl.classList.remove("error--visible");
-    }, 2000);
-
+    renderError(`Your search may not contain Numbers`);
     return;
   }
 
@@ -36,7 +30,7 @@ const submitHandler = (event) => {
   jobListSearchEl.innerHTML = "";
 
   // render spinner
-  spinnerSearchEl.classList.add("spinner--visible");
+  renderSpinner("search");
 
   // fetch sear ch resutls
   // query param --> ?serach=javascript
@@ -54,7 +48,7 @@ const submitHandler = (event) => {
       const { jobItems: jobData } = data; // both are same (data.jobItems) also renames as --> jobData
 
       // remove spinner
-      spinnerSearchEl.classList.remove("spinner--visible");
+      renderSpinner("search");
 
       // render number of results
       numberEl.textContent = jobData.length;
