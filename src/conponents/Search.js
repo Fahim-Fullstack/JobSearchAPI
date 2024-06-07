@@ -34,7 +34,7 @@ const submitHandler = (event) => {
 
   // fetch sear ch resutls
   // query param --> ?serach=javascript
-  fetch(`https://bytegrad.com/course-assets/js/2/api/jobs?search=${searchText}`)
+  fetch(`${BASE_API_URL}/jobs?search=${searchText}`)
     .then((res) => {
       if (!res.ok) {
         throw new Error("Something went wrong!");

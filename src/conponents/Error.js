@@ -1,4 +1,4 @@
-import { errorTextEl, errorEl } from "../common.js";
+import { errorTextEl, errorEl, DEFAULT_DISPLAY_TIME } from "../common.js";
 
 const renderError = (message = "Somethng went wrong") => {
   errorTextEl.textContent = message;
@@ -7,7 +7,7 @@ const renderError = (message = "Somethng went wrong") => {
   //remove after 2 seconds
   setTimeout(() => {
     errorEl.classList.remove("error--visible");
-  }, 2000);
+  }, DEFAULT_DISPLAY_TIME);
 };
 
 export default renderError;
