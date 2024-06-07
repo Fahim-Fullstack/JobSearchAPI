@@ -51,6 +51,9 @@ const submitHandler = (event) => {
   //blur input
   searchInputEl.blur();
 
+  // Remove previous job items
+  jobListSearchEl.innerHTML = "";
+
   // render spinner
   spinnerSearchEl.classList.add("spinner--visible");
 
@@ -76,7 +79,7 @@ const submitHandler = (event) => {
       numberEl.textContent = jobData.length;
 
       // Render job items in search job list
-      jobData.forEach((jobData) => {
+      jobData.slice(0, 7).forEach((jobData) => {
         const newJobItemHTML = `
             <li class="job-item">
               <a class="job-item__link" href="${jobData.id}">
