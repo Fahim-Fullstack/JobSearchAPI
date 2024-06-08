@@ -35,7 +35,7 @@ const renderJobList = (jobData) => {
 };
 
 // -- Job List Component --
-const clickHandler = (event) => {
+const clickHandler = async (event) => {
   //prevent default behavior (navigation)
   event.preventDefault();
 
@@ -72,30 +72,27 @@ const clickHandler = (event) => {
   const id = jobItemEl.children[0].getAttribute("href");
 
   //fetch job item data
-  fetch(`${BASE_API_URL}/jobs/${id}`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`Resource issue(e.g. resource doesn't exist)`);
-      }
+  try {
+    const res = await fetch(`${BASE_API_URL}/jobs/${id}`);
+    const data = await res.json();
 
-      return res.json();
-    })
-    .then((data) => {
-      //extract job item
-      const { jobItem } = data;
-      console.log(jobItem);
+    if (!res.ok) {
+      throw new Error(error.description);
+    }
 
-      //remove spinner
-      // spinnerJobDetailsEl.classList.remove("spinner--visible");
-      renderSpinner("job-details");
+    //extract job item
+    const { jobItem } = data;
 
-      // render job details
-      renderJobDetals(jobItem);
-    })
-    .catch((error) => {
-      renderSpinner("job-details");
-      renderError(error.message);
-    });
+    //remove spinner
+    // spinnerJobDetailsEl.classList.remove("spinner--visible");
+    renderSpinner("job-details");
+
+    // render job details
+    renderJobDetals(jobItem);
+  } catch (error) {
+    renderSpinner("job-details");
+    renderError(error.message);
+  }
 };
 
 jobListSearchEl.addEventListener("click", clickHandler);
