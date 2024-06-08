@@ -4,6 +4,7 @@ import {
   jobListSearchEl,
   numberEl,
   BASE_API_URL,
+  getData,
 } from "../common.js";
 import renderError from "./Error.js";
 import renderSpinner from "./Spinner.js";
@@ -38,12 +39,8 @@ const submitHandler = async (event) => {
   // query param --> ?serach=javascript
 
   try {
-    const res = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(error.description);
-    }
+    // fetch search results
+    const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
 
     // extract job items
     const { jobItems: jobData } = data; // both are same (data.jobItems) also renames as --> jobData
