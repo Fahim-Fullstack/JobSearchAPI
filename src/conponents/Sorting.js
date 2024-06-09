@@ -4,6 +4,7 @@ import {
   sortingBtnRelevantEl,
   state,
 } from "../common.js";
+import renderJobList from "./JobList.js";
 
 const clickHandler = (event) => {
   //get clicked button elemet
@@ -15,11 +16,28 @@ const clickHandler = (event) => {
   // check if intention is recent or relevant sorting
   const recent = clickedButtonEl.className.includes("--recent") ? true : false;
 
-  // //sort job items
-  // if (recent) {
-  //   state.searchJobItems.sort((a, b) => b - a);
-  // } else {
-  // }
+  //make sorting button look active or inctive
+  if (recent) {
+    sortingBtnRecentEl.classList.add("sorting__button--active");
+    sortingBtnRelevantEl.classList.remove("sorting__button--active");
+  } else {
+    sortingBtnRecentEl.classList.remove("sorting__button--active");
+    sortingBtnRelevantEl.classList.add("sorting__button--active");
+  }
+
+  //sort job items
+  if (recent) {
+    state.searchJobItems.sort((a, b) => {
+      return a.daysAgo - b.daysAgo;
+    });
+  } else {
+    state.searchJobItems.sort((a, b) => {
+      return b.relevanceScore - a.relevanceScore;
+    });
+  }
+
+  // rednder job items in list
+  renderJobList();
 };
 
 sortingEl.addEventListener("click", clickHandler);

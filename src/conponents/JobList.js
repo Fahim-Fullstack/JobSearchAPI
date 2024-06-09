@@ -12,6 +12,9 @@ import renderSpinner from "./Spinner.js";
 //
 
 const renderJobList = () => {
+  //remove privious job items
+  jobListSearchEl.innerHTML = "";
+
   state.searchJobItems.slice(0, 7).forEach((jobData) => {
     const newJobItemHTML = `
               <li class="job-item">
